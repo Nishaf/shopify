@@ -3,6 +3,7 @@ import sys
 import logging
 import datetime
 import queue
+from shopify.settings import BASE_DIR
 
 
 class LoggingProvider:
@@ -13,9 +14,9 @@ class LoggingProvider:
         def __init__(self, log_file_path=None, use_print=True):
             self.messages = queue.Queue()
             self.use_print = use_print
-            logs_dir = os.path.join(sys.path[0], 'logs')
-            #if not os.path.exists(logs_dir):
-            #    os.makedirs(logs_dir)
+            logs_dir = os.path.join(BASE_DIR, 'logs')
+            if not os.path.exists(logs_dir):
+                os.makedirs(logs_dir)
             if not log_file_path:
                 now_date = datetime.datetime.now().strftime("%b%d%Y%I%M%p")
                 log_file_name = 'scraper_%s.logs' % now_date
