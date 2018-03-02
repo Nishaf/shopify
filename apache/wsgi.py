@@ -9,6 +9,6 @@ sys.path.append(project)
 
 #Add the path to 3rd party django application and to django itself.
 sys.path.append(os.getcwd())
-os.environ['DJANGO_SETTINGS_MODULE'] = 'shopsify.settings'
+os.environ['DJANGO_SETTINGS_MODULE'] = 'shopify.settings'
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
