@@ -18,7 +18,7 @@ class SProducts:
     def __init__(self, browser):
         self.browser = browser
         self.product_provider = SProduct(browser=browser)
-        self.lp = LoggingProvider()
+        #self.lp = LoggingProvider()
 
     def get_list_string(self, list):
         result = ''
