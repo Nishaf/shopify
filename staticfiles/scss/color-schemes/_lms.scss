@@ -1,0 +1,13 @@
+// main: ../style.scss
+
+$color-scheme: #01a8f6;
+$color-scheme-hover: #00a0ee;
+$color-scheme-dark: #00a0ee;
+$color-scheme-dark-hover: darken($color-scheme-dark, 7%);
+
+$primary: #f46149;
+
+$navbar-bg: $color-scheme;
+$navbar-border: 1px solid rgba(255,255,255,.05);
+$nav-link-hover-color: lighten($color-scheme, 49%);
+$footer-bg: $color-scheme;

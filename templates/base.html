@@ -1,0 +1,210 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="16x16" href="demo/favicon.png">
+    <link rel="stylesheet" href="{% static 'css/pace.css' %}">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Blog Single</title>
+    <!-- CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600|Roboto:400" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/material-icons/material-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/mono-social-icons/monosocialiconsfont.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/feather-icons/feather.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/perfect-scrollbar.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/footable.bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/mono-social-icons/monosocialiconsfont.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.1/jquery.toast.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.4/sweetalert2.css" rel="stylesheet" type="text/css">
+
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Head Libs -->
+    <script src="{% static 'static_links/modernizr.min.js' %}"></script>
+    <script data-pace-options='{ "ajax": false, "selectors": [ "img" ]}' src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+</head>
+
+<body class="header-dark sidebar-light sidebar-expand">
+    <div id="wrapper" class="wrapper">
+        <!-- HEADER & TOP NAVIGATION -->
+        <nav class="navbar">
+            <!-- Logo Area -->
+            <div class="navbar-header">
+                <a href="{% url 'index' %}" class="navbar-brand" style="color: black;">
+                    <!--<img class="logo-expand" alt="" src="{% static 'img/logo.png' %}" width="122" height="54">
+                    <img class="logo-collapse" alt="" src="{% static 'img/logo.png' %}">-->
+                    <span class="logo-expand">Ecomspy</span>
+                    <!-- <p>BonVue</p> -->
+                </a>
+            </div>
+            <!-- /.navbar-header -->
+            <!-- Left Menu & Sidebar Toggle -->
+            <ul class="nav navbar-nav">
+                <li class="sidebar-toggle"><a href="javascript:void(0)" class="ripple"><i class="feather feather-menu list-icon fs-20"></i></a>
+                </li>
+            </ul>
+            <!-- /.navbar-left -->
+            <!-- Search Form -->
+            <form class="navbar-search d-none d-sm-block" role="search" action="{% url 'search' %}" method="post">{% csrf_token %}
+                <i class="feather feather-search list-icon"></i>
+                <input type="search" class="search-query" name="search-query" placeholder="Search...">
+                <a href="javascript:void(0);" class="remove-focus"><i class="material-icons">clear</i>
+                </a>
+            </form>
+            <!-- /.navbar-search -->
+            <div class="spacer"></div>
+            <!-- User Image with Dropdown -->
+            <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle ripple" data-toggle="dropdown"><span class="avatar thumb-xs2"><img src="{{ user.image.url }}" class="rounded-circle" alt=""> <i class="feather feather-chevron-down list-icon"></i></span></a>
+                    <div
+                    class="dropdown-menu dropdown-left dropdown-card dropdown-card-profile animated flipInY">
+                        <div class="card">
+                            <header class="card-header d-flex mb-0">
+                                <a href="{% url 'profile' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-user align-middle"></i>
+                                </a>
+                                <a href="{% url 'edit_password' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-cpu align-middle"></i>
+                                </a>
+                                <a href="{% url 'logout' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-power align-middle"></i>
+                                </a>
+                            </header>
+                            <ul class="list-unstyled card-body">
+                                <li><a href="{% url 'profile' %}"><span><span class="align-middle">Profile</span></span></a>
+                                </li>
+                                <li><a href="{% url 'edit_password' %}"><span><span class="align-middle">Edit Password</span></span></a>
+                                </li>
+                                <li><a href="{% url 'logout' %}"><span><span class="align-middle">Sign Out</span></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+    </nav>
+    <!-- /.navbar -->
+    <div class="content-wrapper">
+        <!-- SIDEBAR -->
+        <aside class="site-sidebar scrollbar-enabled" data-suppress-scroll-x="true">
+            <!-- User Details -->
+            <div class="side-user">
+                <div class="col-sm-12 text-center p-0 clearfix">
+                    <div class="d-inline-block pos-relative mr-b-10">
+                        <figure class="thumb-sm mr-b-0 user--online">
+                            <img src="{{ user.image.url }}" class="rounded-circle" alt="">
+                        </figure><a href="page-profile.html" class="text-muted side-user-link"><i class="feather feather-settings list-icon"></i></a>
+                    </div>
+                    <!-- /.d-inline-block -->
+                    <div class="lh-14 mr-t-5"><a href="page-profile.html" class="hide-menu mt-3 mb-0 side-user-heading fw-500">{{ user.username }}</a>
+                    </div>
+                </div>
+                <!-- /.col-sm-12 -->
+            </div>
+            <!-- /.side-user -->
+            <!-- Sidebar Menu -->
+            <nav class="sidebar-nav">
+                <ul class="nav in side-menu">
+                    {% if user.customer or user.is_superuser %}
+                        <li class="current-page menu-item-has-children active"><a href="javascript:void(0);"><i class="list-icon feather feather-command"></i>
+                            <span class="hide-menu">User Management</span>
+                        </a>
+                            <ul class="list-unstyled sub-menu">
+                                <li><a href="{% url 'show_groups' %}">Groups</a>
+                                </li>
+                                <li><a href="{% url 'show_users' %}">Users</a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    <li class="current-page menu-item-has-children active"><a href="javascript:void(0);"><i class="list-icon feather feather-command"></i>
+                        <span class="hide-menu">Dashboard</span>
+                    </a>
+                        <ul class="list-unstyled sub-menu">
+                            <li><a href="{% url 'show_categories' %}">Categories</a>
+                            </li>
+                            <li><a href="{% url 'show_products' %}">Products</a>
+                            </li>
+                            <li><a href="{% url 'configure_settings' %}">settings</a>
+                            </li>
+                            <li><a href="{% url 'show_sites' %}">Sites</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item-has-children active"><a href="javascript:void(0);"><i class="list-icon feather feather-briefcase"></i>
+                        <span class="hide-menu">Tools</span>
+                    </a>
+                        <ul class="list-unstyled sub-menu">
+                            <li><a href="{% url 'product_extractor' %}">Product Extractor</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <!-- /.side-menu -->
+            </nav>
+            <!-- /.sidebar-nav -->
+
+        </aside>
+        <!-- /.site-sidebar -->
+        <main class="main-wrapper clearfix">
+            <!-- Page Title Area -->
+            <div class="row page-title clearfix">
+                <div class="page-title-left">
+                    <h6 class="page-title-heading mr-0 mr-r-5">Blog Single</h6>
+                    <p class="page-title-description mr-0 d-none d-md-inline-block">statistics, charts and events</p>
+                </div>
+                <!-- /.page-title-left -->
+                <div class="page-title-right d-none d-sm-inline-flex">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">Blog Single</li>
+                    </ol>
+                    <div class="d-none d-md-inline-flex justify-center align-items-center"><a href="javascript: void(0);" class="btn btn-color-scheme btn-sm fs-11 fw-400 mr-l-40 pd-lr-10 mr-l-0-rtl mr-r-40-rtl hidden-xs hidden-sm ripple" target="_blank">Buy Now</a>
+                    </div>
+                </div>
+                <!-- /.page-title-right -->
+            </div>
+            <!-- /.page-title -->
+
+            {% block content %}
+            {% endblock %}
+        </main>
+        <!-- /.main-wrappper -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- FOOTER -->
+    <footer class="footer"><span class="heading-font-family">Copyright @ 2017. All rights reserved BonVue Admin by Unifato</span>
+    </footer>
+    </div>
+    <!--/ #wrapper -->
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.1/jquery.toast.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.4/sweetalert2.min.js"></script>
+    <script src="{% static 'static_links/jquery.min.js' %}"></script>
+    <script src="{% static 'static_links/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.js"></script>
+    <script src="{% static 'static_links/metisMenu.min.js' %}"></script>
+    <script src="{% static 'static_links/perfect-scrollbar.jquery.js' %}"></script>
+    <script src="{% static 'static_links/moment.min.js' %}"></script>
+    <script src="{% static 'static_links/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'static_links/footable.min.js' %}"></script>
+    {% block script %}
+        <script src="{% static 'node_modules/jquery-tabledit/jquery.tabledit.js' %}"></script>
+    {% endblock %}
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+</body>
+
+</html>

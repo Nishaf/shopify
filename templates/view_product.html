@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" rel="stylesheet" type="text/css">
+    <div class="modal modal-color-scheme fade bs-modal-sm-color-scheme" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header text-inverse">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h5 class="modal-title" id="mySmallModalLabel">Extract Product</h5>
+                </div>
+                <form action="{% url 'product_extractor' %}" method="post" class="input-has-value has-validation-callback">{% csrf_token %}
+                    <div>
+                        <div class="modal-body" style="color: black;">
+                            <div class="row">
+                                <input class="form-control" id="id_url" name="url" required="" type="hidden" value="{{ product.url }}">
+                                    <div class="col-lg-12">
+                                      <div class="checkbox checkbox-color-scheme mr-auto">
+                                            <label class="d-flex checkbox-checked">
+                                                <input type="checkbox" name="download_info" id="id_download_info" checked=""><span class="label-text">Extract product information</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="checkbox checkbox-color-scheme mr-auto">
+                                        <label class="d-flex checkbox-checked">
+                                            <input type="checkbox" name="download_images" id="id_download_images" checked=""><span class="label-text">Extract product images</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-muted">Extract will be a CSV for product information and a ZIP of the images</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="save_website" type="submit" class="default btn btn-color-scheme">Extract</button>
+                            <button id="cancel_save_website" type="button" class="btn btn-size btn-warning pull-right" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="widget-list">
+        <div class="row">
+            <div class="widget-holder col-md-12">
+                <div class="widget-bg">
+                    <div class="widget-heading widget-heading-border">
+                        <h5 class="widget-title">Product Details</h5>
+                        <div class="widget-actions" style="color: blue;">
+                            <a href="{{ product.url }}" style="color: blue;">
+                                <i class="list-icon feather feather-eye"></i>
+                            </a>
+                            <i class="list-icon feather feather-download" style="padding-left: 10px; cursor: pointer;"
+                               data-toggle="modal" data-target=".bs-modal-sm-color-scheme" onclick="call_func('{{ product.url }}')">
+                            </i>
+                        </div>
+                        <!-- /.widget-actions -->
+                    </div>
+                    <div class="widget-body">
+                        <h5 class="box-title">Images</h5>
+                        <div class="carousel multi-slide-carousel" data-slick='{"slidesToShow":2, "slidesToScroll": 2, "autoplay": true, "infinite": true,  "dots": true, "infinite": true }'>
+                            {% for i in product.images %}
+                            <div class="item-image">
+                                <a href="#" class="img-shadow">
+                                    <img src="{{ i }}" alt=""> <span class="shadow"></span>
+                                </a>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <h5><strong>Title</strong></h5>
+                        <span>{{ product.title }}</span>
+                        <h5><strong>Parent Website</strong></h5>
+                        <span>{{ product.website }}</span>
+                        {% if product.category %}
+                            <h5><strong>Category</strong></h5>
+                            <span>{{ product.category }}</span>
+                        {% endif %}
+                        {% if product.description %}
+                            <h5><strong>Short Description</strong></h5>
+                            <span>{{ product.description }}</span>
+                        {% endif %}
+                        <h5><strong>URL</strong></h5>
+                        <span>{{ product.url }}</span>
+                        <h5><strong>Price</strong></h5>
+                        <span>{{ product.price }}</span>
+                        <h5><strong>Sale Price</strong></h5>
+                        <span>{{ product.sale_price }}</span>
+                        <h5><strong>Currency</strong></h5>
+                        <span>{{ product.currency }}</span>
+                        <h5><strong>Time Extracted</strong></h5>
+                        <span>{{ product.date_added }}</span>
+                        {%  if product.options %}
+                            <h5><strong>Options</strong></h5>
+                            <span>{{ product.options }}</span>
+                        {% endif %}
+
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+
+{% endblock %}

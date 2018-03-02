@@ -1,0 +1,86 @@
+// main: ../style.scss
+/********************************
+*********************************
+E-Commerce Products
+*********************************
+*********************************/
+.ecommerce-products {
+
+  li {
+    margin-bottom: em(30);
+    &:nth-child(3n+1) {
+      clear: both;
+    }
+    @media (max-width: 991px) {
+      &:nth-child(3n+1) {
+        clear: none;
+      }
+      &:nth-child(odd) {
+        clear: both;
+      }
+    }
+  }
+
+  .card {
+    transition: all .2s;
+
+    &:hover {
+      box-shadow: 0px 0px 20px rgba(0,0,0,.2);
+      transform: scale(1.01);
+    }
+
+    .card-header {
+      position: relative;
+        .triangle-top-right {
+          position: absolute;
+          display: inline-block;
+          width: 0;
+          height: 0;
+          top: 0;
+          right: 0;
+          border-style: solid;
+          border-width: 0 80px 80px 0;
+          border-color: transparent $color-scheme transparent transparent;
+
+          &::after {
+            content: "\e925";
+            font-family: "feather";
+            color: #fff;
+            font-size: em(20);
+            position: absolute;
+            left: em(45,20);
+            top: em(10,20);
+          }
+        }
+    }
+    .card-footer {
+      border-color: $theme-border-color;
+      background: none;
+      div {
+        border-right: 1px solid $theme-border-color;
+        &:last-child { border: none; }
+        a { color: $text-muted; }
+        &:hover {
+          a { color: $color-scheme; }
+        }
+
+      }
+    }
+  }
+  
+  body.rtl & {
+    .card .card-footer div {
+      border-right: 0;
+      border-left: 1px solid $theme-border-color;
+      &:last-child { border: none; }
+    }
+  }
+}
+
+.invoice-sum {
+  li {
+    background: rgba(0,0,0,.05);
+    margin-bottom: em(2);
+    padding: em(5) em(10);
+  }
+}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <!-- =================================== -->
+    <!-- Different data widgets ============ -->
+    <!-- =================================== -->
+     <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-heading clearfix">
+                        <h5 style="float: left;">All Websites</h5>
+                        <button style="float: right;" class="btn btn-color-scheme btn-sm fs-11 fw-400 mr-l-40 pd-lr-10
+                         mr-l-0-rtl mr-r-40-rtl hidden-xs hidden-sm ripple" data-href="{% url 'add_site' %}"
+                                id="add_new_site">Add New</button>
+                    </div>
+                    <!-- /.widget-heading -->
+                    <div class="widget-body clearfix">
+                        <table class="table table-light" data-toggle="datatables" id="settingsTable">
+                            <thead style="font-size: 15px; color: black;">
+                                <tr>
+                                    <th data-identifier>ID</th>
+                                    <th>Name</th>
+                                    <th>URL</th>
+                                    <th>Total Products</th>
+                                    <th>Time Updated</th>
+                                    <th>Options</th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 15px; color: black;">
+                            {% for site in sites %}
+                                    <tr data-expanded="true">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ site.name }}</td>
+                                        <td>{{ site.url}}</td>
+                                        <td>{{ site.total_products}}</td>
+                                        <td>{{ site.last_update_date }}</td>
+                                        <td style="color:blue;">
+                                            <a href="{{ site.url }}" target="_blank">
+                                                <i class="list-icon feather feather-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.widget-list -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $(function () {
+        {% if start %}
+            var request = $.ajax({
+                type: "GET",
+                url: '/scraping_tool/start/'
+            });
+        {% endif %}
+        $('#add_new_site').click(function () {
+            window.location.href = $(this).data('href');
+        });
+    });
+    </script>
+{% endblock %}

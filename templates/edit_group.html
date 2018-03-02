@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!-- =================================== -->
+    <!-- Different data widgets ============ -->
+    <!-- =================================== -->
+    <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-heading clearfix">
+                        <h5 style="float:left;">Group Details</h5>
+                        <button style="float: right;" class="btn btn-color-scheme btn-sm fs-11 fw-400 mr-l-40 pd-lr-10
+                         mr-l-0-rtl mr-r-40-rtl hidden-xs hidden-sm ripple" id="add_group_user"
+                                data-href="{% url 'add_group_user' %}?group={{ group.name }}">Add User</button>
+                    </div>
+                    <!-- /.widget-heading -->
+                    <div class="widget-body clearfix">
+                        <h6><strong>Group Name</strong></h6>
+                        <span id="group_name">{{ group.name }}</span>
+
+                        <h6><strong>Number of Sites</strong></h6>
+                        <span>{{ group.number_of_sites }}</span>
+                        {% if group.user_set.all %}
+                        <table class="table table-editable table-responsive" data-toggle="datatables">
+                            <thead>
+                                <tr>
+                                    <th data-identifier>ID</th>
+                                    <th data-editable>Member Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in group.user_set.all %}
+                                <tr data-expanded="true" class="{{ user }}">
+                                    <td onclick="edit_user('{{ user }}')">{{ forloop.counter }}</td>
+                                    <td onclick="edit_user('{{ user }}')">{{ user }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                            <h4 style="padding-top: 20px;" align="center">No Users in this Group!</h4>
+                        {% endif %}
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.widget-list -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    {% block script %}
+        <script src="{% static 'node_modules/jquery-tabledit/jquery.tabledit2.js' %}"></script>
+    {% endblock %}
+    <script>
+     $(function () {
+        $('#add_group_user').click(function () {
+            window.location.href = $(this).data('href');
+        });
+    });
+      function edit_user(username) {
+        window.location.href = '/panel/edit_user?username=' + username;
+    }
+    </script>
+{% endblock %}

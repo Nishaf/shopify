@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="widget-list">
+    <div class="row">
+        <div class="col-md-12 widget-holder">
+          <div class="widget-bg">
+              <div class="widget-body clearfix">
+                  <h5 class="box-title mr-b-0">Product Extractor</h5><br>
+                  {% if error %}
+                    <div align="center">
+                        <span style="padding-top: 20px; color: red;">{{ error }}</span>
+                    </div>
+                  {% endif %}
+                  <form action="{% url 'product_extractor' %}" method="post">{% csrf_token %}
+                      <div>
+                          <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group input-has-value">
+
+                                    <label for="id_url">URL:</label>
+                                    <input class="form-control" id="id_url" name="url" maxlength="200" required="" placeholder="http://example.com/products/magic-product" type="url">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="checkbox checkbox-color-scheme  mr-auto">
+                                    <label class="d-flex checkbox-checked">
+                                        <input type="checkbox" name="download_info" id="id_download_info" checked=""><span class="label-text">Extract product information</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                              <div class="checkbox checkbox-color-scheme mr-auto">
+                                    <label class="d-flex checkbox-checked">
+                                        <input type="checkbox" name="download_images" id="id_download_images" checked=""><span class="label-text">Extract product images</span>
+                                    </label>
+                                </div>
+                            </div>
+                          </div>
+                          <hr>
+                          <p class="text-muted">Extract will be a CSV for product information and a ZIP of the images</p>
+                          <div class="submit-row input-has-value">
+                            <input type="submit" value="Extract" class="btn btn-color-scheme ">
+                          </div>
+                    </div>
+                </form>
+             </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

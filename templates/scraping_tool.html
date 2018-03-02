@@ -1,0 +1,543 @@
+{% load static %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="16x16" href="demo/favicon.png">
+    <link rel="stylesheet" href="{% static 'css/pace.css' %}">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Blog Single</title>
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600|Roboto:400" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/material-icons/material-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/mono-social-icons/monosocialiconsfont.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/feather-icons/feather.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/perfect-scrollbar.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/footable.bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/jquery.dataTables.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <!-- Head Libs -->
+    <script src="{% static 'static_links/modernizr.min.js' %}"></script>
+    <script data-pace-options='{ "ajax": false, "selectors": [ "img" ]}' src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+    <style>
+footer{
+ position:fixed;
+ bottom:0;
+ left:0;
+}
+    </style>
+</head>
+
+<body class="header-dark">
+    <div id="wrapper" class="wrapper">
+        <!-- HEADER & TOP NAVIGATION -->
+        <nav class="navbar">
+            <!-- /.navbar-left -->
+            <div class="spacer"></div>
+            <!-- User Image with Dropdown -->
+            <ul class="nav navbar-nav">
+                <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle ripple" data-toggle="dropdown"><span class="avatar thumb-xs2"><img src="{{ user.image.url }}" class="rounded-circle" alt=""> <i class="feather feather-chevron-down list-icon"></i></span></a>
+                    <div
+                    class="dropdown-menu dropdown-left dropdown-card dropdown-card-profile animated flipInY">
+                        <div class="card">
+                            <header class="card-header d-flex mb-0">
+                                <a href="{% url 'profile' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-user align-middle"></i>
+                                </a>
+                                <a href="{% url 'edit_password' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-cpu align-middle"></i>
+                                </a>
+                                <a href="{% url 'logout' %}" class="col-md-4 text-center">
+                                    <i class="feather feather-power align-middle"></i>
+                                </a>
+                            </header>
+                            <ul class="list-unstyled card-body">
+                                <li><a href="{% url 'profile' %}"><span><span class="align-middle">Profile</span></span></a>
+                                </li>
+                                <li><a href="{% url 'edit_password' %}"><span><span class="align-middle">Edit Password</span></span></a>
+                                </li>
+                                <li><a href="{% url 'logout' %}"><span><span class="align-middle">Sign Out</span></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+    </nav>
+    <!-- Modals-->
+    <div id="settings-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div class="modal-body">
+                    <div class="text-center my-3">
+                        <a href="index.html" class="text-success">
+                            <h4>Change Settings</h4>
+                        </a>
+                    </div>
+                    <div class="form-group mr-b-10">
+                        <label for="get_proxy_list_api_key">PROXY API KEY</label>
+                        <input class="form-control" type="text" id="get_proxy_list_api_key"
+                               placeholder="3d482b92d5ad93f5f6547e98db9cf977748a4f49"
+                               value="{{ settings_list.0.proxy_api }}">
+                    </div>
+                    <div class="form-group mr-b-10">
+                        <label for="update_period"">UPDATE AFTER XX SECONDS</label>
+                        <input class="form-control" type="text" id="update_period"
+                            placeholder="60" value="{{ settings_list.0.update_period }}">
+                    </div>
+                    <div class="form-group text-center" style="padding-top:20px;">
+                        <button class="btn btn-rounded btn-color-scheme ripple" id="save_settings">Change Settings</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="add-website-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div class="modal-body">
+                    <div class="text-center my-3">
+                        <a href="index.html" class="text-success">
+                            <h4>Add New Website</h4>
+                        </a>
+                    </div>
+                    <div class="form-group mr-b-10">
+                        <label for="website_name">Website Name</label>
+                        <input class="form-control" type="text" id="website_name" placeholder="Example">
+                    </div>
+                    <div class="form-group mr-b-10">
+                        <label for="website_url">Website URL</label>
+                        <input class="form-control" type="text" id="website_url" placeholder="http://example.com">
+                    </div>
+                    <div class="form-group text-center" style="padding-top:20px;">
+                        <button class="btn btn-rounded btn-color-scheme ripple" id="save_website">Save</button>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div id="delete-website-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <div class="modal-body">
+                    <div class="text-center my-3">
+                        <a href="index.html" class="text-success">
+                            <h4>Are you Sure?</h4>
+                            <span>You won't be able to revert the changes.</span>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6" style="padding-top:20px;" align="right">
+                        <button class="btn btn-rounded btn-color-scheme ripple" id="delete_website">Delete</button>
+                        </div>
+                        <div class="form-group col-md-6" style="padding-top:20px;" align="left">
+                        <button class="btn btn-rounded btn-default ripple" id="cancel_delete_website" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="content-wrapper">
+        <main class="main-wrapper clearfix"  style="padding-top: 90px;">
+            <div class="widget-list">
+                <div class="row">
+                    <div class="widget-holder col-md-12">
+                        <div class="widget-bg">
+                            <div class="widget-heading widget-heading-border">
+                                <h4 class="widget-title">Scraping Tool</h4>
+                            </div>
+                            <div class="widget-body">
+
+                                <div class="row" style="padding-bottom: 20px;">
+                                    <div class="col-md-4">
+                                        <button id="add_button" class="btn btn-blue btn-md ripple"
+                                        data-toggle="modal" data-target="#add-website-modal">
+                                            <span>ADD</span>
+                                        </button>
+                                        <button id="delete_button" class="btn btn-blue btn-md ripple" disabled="true"
+                                        data-toggle="modal" data-target="#delete-website-modal">
+
+                                            <span>DELETE</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-8" align="right">
+                                        <button id="start_scraper" class="btn btn-blue btn-md ripple">
+                                        <span>START</span>
+                                        </button>
+                                        <button id="stop_scraper" class="btn btn-danger btn-md ripple">
+                                            <span>STOP</span>
+                                        </button>
+                                        <button id="scraper_settings_button" class="btn btn-blue btn-md ripple"
+                                        data-toggle="modal" data-target="#settings-modal">
+                                            <span>SETTINGS</span>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12" style="padding-top:20px;">
+                                        <div class="progress progress-md" style="display: none;">
+                                            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" style="width: 100%" role="progressbar">
+                                                <span class="sr-only" style="color: black;">Job in Progress!</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="table table-light" data-toggle="datatables" id="sitestable">
+                                    <thead style="font-size: 15px; color: black;">
+                                        <tr>
+                                            <th data-identifier>ID</th>
+                                            <th>URL</th>
+                                            <th>Total Products</th>
+                                            <th>Time Updated</th>
+                                            <th>Delete</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody style="font-size: 15px; color: black;">
+                                    {% for site in sites %}
+                                            <tr>
+                                                <td>{{ forloop.counter }}</td>
+                                                <td>{{ site.url}}</td>
+                                                <td>{{ site.total_products}}</td>
+                                                <td>{{ site.last_update_date }}</td>
+                                                <td>
+                                                    <div class="checkbox checkbox-rounded checkbox-color-scheme">
+                                                        <label class="checkbox-checked" id="select">
+                                                            <input type="checkbox" class="select_checkbox" value="{{ site.id }}">
+                                                            <span class="label-text"></span>
+                                                        </label>
+                                                    </div>
+                                                    <!--<div class="checkbox checkbox-primary">
+                                                        dhfso
+                                                        <input id="select_checkbox" type="checkbox" value="">
+                                                    </div>-->
+                                                </td>
+                                            </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- /.main-wrappper -->
+
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- FOOTER -->
+    <footer class="footer" style="margin-bottom: -90px;"><span class="heading-font-family">Copyright @ 2017. All rights reserved BonVue Admin by Unifato</span>
+    </footer>
+    </div>
+    <!--/ #wrapper -->
+    <!-- Scripts -->
+    <script src="{% static 'static_links/jquery.min.js' %}"></script>
+    <script src="{% static 'static_links/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'static_links/metisMenu.min.js' %}"></script>
+    <script src="{% static 'static_links/perfect-scrollbar.jquery.js' %}"></script>
+    <script src="{% static 'static_links/moment.min.js' %}"></script>
+    <script src="{% static 'static_links/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'static_links/footable.min.js' %}"></script>
+    <script src="{% static 'node_modules/jquery-tabledit/jquery.tabledit.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+    <!--<table class="table table-light dataTable no-footer" data-toggle="datatables"
+    id="sitestable" role="grid" aria-describedby="sitestable_info">-->
+    <script>
+        $(document).ready(function() {
+            $('.select_checkbox').change(function(){
+                var checkbox_list = $(":checkbox");
+                var is_checked = false;
+                for (var i=0; i < checkbox_list.length; i++){
+                    if(checkbox_list[i].checked){
+                        is_checked = true;
+                    }
+                }
+                if (is_checked)
+                    $('#delete_button').prop('disabled', false);
+                else
+                    $('#delete_button').prop('disabled', true);
+            });
+            function isUrlValid(website_url) {
+                var res = website_url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+                if(res == null)
+                    return false;
+                else
+                    return true;
+            }
+
+            function isNameValid(website_name) {
+                length = website_name.length;
+                if(length > 0 && website_name)
+                    return true;
+                else
+                    return false;
+            }
+
+            function disableAddModalButtons(){
+                $('#dismiss_save_website').prop('disabled', true);
+                $('#save_website').prop('disabled', true);
+                $('#cancel_save_website').prop('disabled', true);
+            }
+
+            function enableAddModalButtons(){
+                $('#dismiss_save_website').prop('disabled', false);
+                $('#save_website').prop('disabled', false);
+                $('#cancel_save_website').prop('disabled', false);
+            }
+
+            function disableDeleteModalButtons(){
+                $('#dismiss_delete_website').prop('disabled', true);
+                $('#delete_website').prop('disabled', true);
+                $('#cancel_delete_website').prop('disabled', true);
+            }
+
+            function enableDeleteModalButtons(){
+                $('#dismiss_delete_website').prop('disabled', false);
+                $('#delete_website').prop('disabled', false);
+                $('#cancel_delete_website').prop('disabled', false);
+            }
+
+            $("#website_name").on('input', function() {
+                var website_name_element = $('#website_name');
+                var website_name = website_name_element.val();
+                var is_valid_website_name = isNameValid(website_name);
+                if (is_valid_website_name)
+                    website_name_element.closest('.input-group-btn').addClass("has-success").removeClass("has-error");
+                else
+                    website_name_element.closest('.input-group-btn').removeClass("has-success").addClass("has-error");
+            });
+
+            $("#website_url").on('input', function() {
+                var website_url_element = $('#website_url');
+                var website_url = website_url_element.val();
+                var is_valid_website_url = isUrlValid(website_url);
+                if (is_valid_website_url)
+                    website_url_element.closest('.input-group-btn').addClass("has-success").removeClass("has-error");
+                else
+                    website_url_element.closest('.input-group-btn').removeClass("has-success").addClass("has-error");
+            });
+
+            $("#save_website").click(function(event){
+                var website_name = $('#website_name').val();
+                var website_url = $('#website_url').val();
+                if (!isUrlValid(website_url) || !isNameValid(website_name))
+                    return;
+                disableAddModalButtons();
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                     type:"POST",
+                     url:"add/",
+                     data: {
+                            'website_name': website_name,
+                            'website_url': website_url
+                            },
+                     success: function (response) {
+                        var success = response['success']
+                        if (!success){
+                            var message = response['message']
+                            enableAddModalButtons();
+                            alert(message);
+                        }
+                        else{
+                            $('#AddWebsiteModal').modal('hide');
+                            location.reload();
+                        }
+                     }
+                });
+            });
+
+
+            $("#delete_website").click(function(event){
+                var ids_to_delete = [];
+                var checked_list = $('input:checked');
+                for (var i=0; i < checked_list.length; i++){
+                    var id_to_delete = checked_list[i].value;
+                    ids_to_delete.push(id_to_delete)
+                }
+                disableDeleteModalButtons();
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                     type:"POST",
+                     url:"delete/",
+                     data: {
+                            'ids_to_delete[]': ids_to_delete,
+                            },
+                     success: function (response) {
+                        var success = response['success'];
+                        if (success){
+                            $('#DeleteConfirmModal').modal('hide');
+                            location.reload();
+                        }
+                        else{
+                            enableDeleteModalButtons();
+                            var message = response['message'];
+                            alert(message);
+                        }
+                     }
+                });
+            });
+
+            $("#save_settings").click(function(event){
+                var proxy_api_key = $('#get_proxy_list_api_key').val();
+                var update_period = $('#update_period').val();
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                     type:"POST",
+                     url:"settings/",
+                     data: {
+                            'proxy_api_key': proxy_api_key,
+                            'update_period': update_period
+                     },
+                     success: function (response) {
+                        var success = response['success'];
+                        if (success){
+                            $('#ScraperSettingsModal').modal('hide');
+                            location.reload();
+                        }
+                        else{
+                            var message = response['message'];
+                            alert(message);
+                        }
+                     }
+                });
+            });
+
+            $("#start_scraper").click(function(event){
+                setDisable();
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                     type:"POST",
+                     url:"start/",
+
+                     success: function (response) {
+                            location.reload();
+                     }
+                });
+              });
+
+            $("#stop_scraper").click(function(event){
+                setEnable();
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                     type:"POST",
+                     url:"stop/"
+                });
+              });
+
+            function update_status(in_progress, is_job_finished, url, success, last_update_date, total_products){
+              if (!in_progress) {
+                    setEnable();
+              }
+              else {
+                    setDisable();
+              }
+            }
+            function setEnable(){
+                $('#start_scraper').prop('disabled', false);
+                /*var elements = document.getElementsByClassName("tabledit-toolbar btn-toolbar");
+                for (var i = 0, len = elements.length; i < len; i++) {
+                    elements[i].style.display='block';
+                }*/
+                $('input[class="select_checkbox"]').prop( "disabled", false);
+                $('#stop_scraper').prop('disabled', true);
+                $('#add_button').prop( "disabled", false);
+                $('#scraper_settings_button').prop( "disabled", false);
+                $('.progress').hide();
+            }
+
+            function setDisable(){
+                $('#start_scraper').prop('disabled', true);
+                $('#stop_scraper').prop('disabled', false);
+                $('#add_button').prop( "disabled", true);
+                 $('input[class="select_checkbox"]').each(function () {
+                    $(this).prop( "disabled", true);
+                 });
+                /*var elements = document.getElementsByClassName("tabledit-toolbar btn-toolbar");
+                for (var i = 0, len = elements.length; i < len; i++) {
+                    elements[i].css('display', "none");
+                }*/
+
+                $('#scraper_settings_button').prop( "disabled", true);
+                $('.progress').show()
+            }
+
+            (function get_status() {
+                $.ajaxSetup({
+                    data: {
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: '/scraping_tool/status/',
+                    success: function(data) {
+                      var is_job_finished = data['is_job_finished'];
+                      var in_progress = data['in_progress'];
+                      var url = data['url'];
+                      var success = data['success'];
+                      var last_update_date = data['last_update_date'];
+                      var total_products = data['total_products'];
+                      update_status(in_progress, is_job_finished, url, success, last_update_date, total_products);
+                    },
+                    complete: function() {
+                      setTimeout(get_status, 5000);
+                    }
+                });
+            })();
+
+            var time = new Date().getTime();
+             $(document.body).bind("mousemove keypress", function(e) {
+                 time = new Date().getTime();
+             });
+
+             function refresh() {
+                 if(new Date().getTime() - time >= 60000)
+                     window.location.reload(true);
+                 else
+                     setTimeout(refresh, 10000);
+             }
+
+             setTimeout(refresh, 10000);
+        });
+
+    </script>
+</body>
+
+</html>

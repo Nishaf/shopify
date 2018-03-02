@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!-- =================================== -->
+    <!-- Different data widgets ============ -->
+    <!-- =================================== -->
+    <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-heading clearfix">
+                        <h5 style="float:left;">All Categories</h5>
+                    </div>
+                    <!-- /.widget-heading -->
+                    <div class="widget-body clearfix">
+                        <table class="table table-responsive" data-toggle="datatables" style="color: black;">
+                            <thead>
+                                <tr>
+                                    <th data-identifier>ID</th>
+                                    <th data-editable>Category</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for tag in tags_set %}
+                                <tr style="cursor:pointer;"
+                                    onclick="view_category('{{ tag }}')">
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ tag| title }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.widget-list -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    function view_category(tag) {
+        //data-href="{% url 'view_category' %}?category={{ tag }}"
+        window.location.href = '/panel/view_category/?category='+tag;
+        }
+    </script>
+{% endblock %}

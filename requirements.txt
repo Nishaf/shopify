@@ -1,0 +1,16 @@
+psycopg2
+requests==2.18.4
+requests-toolbelt==0.7.0
+Django==1.11.7
+django-bootstrap3==9.1.0
+django-jquery==3.1.0
+Django-Bootstrap3-Validator==0.3.3
+gunicorn==19.7.1
+whitenoise==3.3.1
+beautifulsoup4==4.6.0
+oauth2client==4.1.2
+gspread==0.6.2
+djangorestframework==3.7.3
+Pillow==4.3.0
+bs4
+lxml

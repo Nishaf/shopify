@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/demo/favicon.png">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Login2</title>
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,600|Roboto:400" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/material-icons/material-icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/mono-social-icons/monosocialiconsfont.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/feather-icons/feather.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'static_links/perfect-scrollbar.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css">
+    <!-- Head Libs -->
+    <script src="{% static 'static_links/modernizr.min.js' %}"></script>
+</head>
+<body class="body-bg-full profile-page">
+    <div id="wrapper" class="wrapper">
+        <div class="row container-min-full-height">
+            <div class="col-lg-8 p-3 login-left">
+                <div class="w-50">
+                    <h2 class="mb-4 text-center">Welcome back!</h2>
+                    <div style="padding: 10px 0 10px 0;font-size: 17px;color: red;" id="error" align="center">
+                        {% if message %}
+                            {{ message }}
+                        {% endif %}
+                    </div>
+                    <form class="text-center" action="{% url 'login' %}" method="post">{% csrf_token %}
+                        <div class="form-group">
+                            <label class="text-muted" for="username">Username</label>
+                            <input type="text" placeholder="username" class="form-control form-control-line" name="username" value="">
+                        </div>
+                        <div class="form-group">
+                            <label class="text-muted" for="password">Password</label>
+                            <input type="password" placeholder="password" class="form-control form-control-line" name="password" value="">
+                        </div>
+
+                        <!-- /.form-group -->
+                        <div class="form-group mr-b-20">
+                            <button class="btn btn-block btn-rounded btn-md btn-color-scheme text-uppercase fw-600 ripple" type="submit">Sign In</button>
+                        </div>
+                    </form>
+                    <!-- /form -->
+
+                </div>
+                <!-- /.w-75 -->
+            </div>
+            <div class="col-lg-4 login-right d-lg-flex d-none pos-fixed pos-right text-inverse container-min-full-height" style="
+            background-image: url({% static 'demo/login-page-bg.jpg' %})">
+                <div class="login-content px-3 w-75 text-center">
+                    <h2 class="mb-4 text-center fw-300">New here?</h2>
+                    <p class="heading-font-family fw-300 letter-spacing-minus">Sign up and discover the many great features that our app provides</p><a class="btn btn-rounded btn-md btn-outline-inverse text-uppercase fw-600 ripple pd-lr-60 mr-t-200" href="{% url 'signup' %}">Sign Up</a>
+
+                </div>
+                <!-- /.login-content -->
+            </div>
+            <!-- /.login-right -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.wrapper -->
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'static_links/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/material-design.js' %}"></script>
+    <script>
+            $(function () {
+               setTimeout(function () {
+                   document.getElementById('error').innerHTML = '';
+               }, 3000);
+            });
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-body clearfix">
+                        <h5 class="box-title mr-b-0">Edit Settings</h5>
+                        <form action="{% url 'edit_settings' %}" method="post">{% csrf_token %}
+                            {% for field in settings_form %}
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="l0">{{ field.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <button style="float: right;" class="btn btn-color-scheme" type="submit">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

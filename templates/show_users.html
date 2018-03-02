@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!-- =================================== -->
+    <!-- Different data widgets ============ -->
+    <!-- =================================== -->
+    <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-heading clearfix">
+                        <h5 style="float:left;">User Details</h5>
+                        <button style="float: right;" class="btn btn-color-scheme btn-sm fs-11 fw-400 mr-l-40 pd-lr-10
+                         mr-l-0-rtl mr-r-40-rtl hidden-xs hidden-sm ripple" id="add_new_user"
+                                data-href="{% url 'add_user' %}">Add New</button>
+                    </div>
+                    <!-- /.widget-heading -->
+                    <div class="widget-body clearfix">
+                        <table class="table table-editable table-responsive" data-toggle="datatables">
+                            <thead>
+                                <tr>
+                                    <th data-identifier>ID</th>
+                                    <th data-editable>Username</th>
+                                    <th data-editable>Email</th>
+                                    <th data-editable>First Name</th>
+                                    <th data-editable>Last Name</th>
+                                    <th>Group Name</th>
+                                    <th>Joined Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in users %}
+                                <tr data-expanded="true" class="{{ user.username }}">
+                                    <td onclick="edit_user('{{ user.username }}')">{{ forloop.counter }}</td>
+                                    <td onclick="edit_user('{{ user.username }}')">{{ user.username }}</td>
+                                    <td onclick="edit_user('{{ user.username }}')">{{ user.email }}</td>
+                                    <td onclick="edit_user('{{ user.username }}')">{{ user.first_name }}</td>
+                                    <td onclick="edit_user('{{ user.username }}')">{{ user.last_name }}</td>
+                                    <td onclick="edit_user('{{ user.username }}')">
+                                        {% for i in user.groups.all %}
+                                            {{ i }}
+                                        {% endfor %}
+                                    </td>
+                                    <td onclick="product('{{ user.username }}')">{{ user.date_joined }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.widget-list -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    function edit_user(username) {
+        window.location.href = '/panel/edit_user?username=' + username;
+    }
+    </script>
+{% endblock %}

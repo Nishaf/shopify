@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="widget-list">
+    <div class="row">
+        <div class="col-md-12 widget-holder">
+          <div class="widget-bg">
+              <div class="widget-body search-results clearfix">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h5 class="box-title fs-14">
+                            {% if sites.count %}
+                            Total sites: <span class="text-muted">({{ sites.count }})</span>
+                            {% else %}
+                            No sites found
+                            {% endif %}
+                        </h5>
+                        {% if sites.count %}
+                            <ul class="list-unstyled mt-4">
+                                {% for item in sites %}
+                                <li class="d-flex"><i class="material-icons list-icon text-muted fs-20 mr-3">web_asset</i>
+                                    <section><a href="{{ item.url }}" target="_blank" class="h5 fs-15 mt-0 mb-1 sub-heading-font-family block">{{ item.name }}</a>
+                                    </section>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        <hr>
+                        <h5 class="box-title fs-14">
+                            {% if products.count %}
+                            Total products: <span class="text-muted">({{ products.count }})</span>
+                            {% else %}
+                            No products found
+                            {% endif %}
+                        </h5>
+                        {% if products.count %}
+                            <ul class="list-unstyled mt-4">
+                                {% for item in products %}
+                                <li class="d-flex"><i class="material-icons list-icon text-muted fs-20 mr-3">shopping_cart</i>
+                                    <section><a href="{% url 'view_product' %}?product_name={{ item.title }}&product_url={{ item.url }}" target="_blank" class="h5 fs-15 mt-0 mb-1 sub-heading-font-family block">{{ item.title }}</a>
+                                    </section>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

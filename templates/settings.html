@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <!-- =================================== -->
+    <!-- Different data widgets ============ -->
+    <!-- =================================== -->
+     <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-heading clearfix">
+                        <h5 style="float: left;">Configure Settings</h5>
+                    </div>
+                    <!-- /.widget-heading -->
+                    <div class="widget-body clearfix">
+                        <table class="table table-light" data-toggle="datatables" id="settingsTable">
+                            <thead style="font-size: 15px; color: black;">
+                                <tr>
+                                    <th data-identifier>ID</th>
+                                    <th>Name</th>
+                                    <th>Proxy</th>
+                                    <th>Update Period (after SS seconds)</th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="font-size: 15px; color: black;">
+                            {% for setting in settings %}
+                                    <tr data-expanded="true" style="cursor: pointer;" data-href="{% url 'edit_settings' %}">
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ setting.name }}</td>
+                                        <td>{{ setting.proxy_api }}</td>
+                                        <td>{{ setting.update_period }}</td>
+                                    </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- /.widget-body -->
+                </div>
+                <!-- /.widget-bg -->
+            </div>
+            <!-- /.widget-holder -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.widget-list -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    $('#settingsTable').on( 'click', 'tbody tr', function () {
+      window.location.href = $(this).data('href');
+    });
+    </script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="widget-list">
+        <div class="row">
+            <div class="col-md-12 widget-holder">
+                <div class="widget-bg">
+                    <div class="widget-body clearfix">
+                        <h5 class="box-title mr-b-0">User Info</h5>
+                        <span style=" color: red;">{{ user_form.errors }}</span><br>
+                        <form action="{% url 'edit_user' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                            <input type="hidden" value="{{ username }}" name="username">
+                            {% for field in user_form.visible_fields %}
+                                <div class="form-group row">
+                                    <label class="col-md-3 col-form-label" for="l0">{{ field.label_tag }}</label>
+                                    <div class="col-md-9">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <button style="float: right;" class="btn btn-color-scheme" type="submit">Update Profile</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
