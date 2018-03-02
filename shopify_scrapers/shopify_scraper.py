@@ -7,7 +7,7 @@ from shopify_scrapers.shopify_categories import SCategories
 from shopify_scrapers.shopify_products import SProducts
 from shopify_scrapers.shopify_product import SProduct
 
-from providers.logging_provider import LoggingProvider
+#from providers.logging_provider import LoggingProvider
 from providers.request_browser import Browser
 
 

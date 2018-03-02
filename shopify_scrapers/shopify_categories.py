@@ -2,7 +2,7 @@ import re
 
 from lxml import html
 from config.config import defaults
-from providers.logging_provider import LoggingProvider
+#from providers.logging_provider import LoggingProvider
 from bs4 import BeautifulSoup
 
 
@@ -14,7 +14,7 @@ class SCategories:
     _in_progress = False
 
     def __init__(self, browser):
-        self.lp = LoggingProvider()
+        #self.lp = LoggingProvider()
         self.browser = browser
 
     def get_categories(self, url):

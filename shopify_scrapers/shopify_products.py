@@ -1,6 +1,6 @@
 from lxml import html
 from shopify_scrapers.shopify_product import SProduct
-from providers.logging_provider import LoggingProvider
+#from providers.logging_provider import LoggingProvider
 from shopsify_admin.models import ShopifyProductModel, ShopifySiteModel
 from datetime import datetime
 

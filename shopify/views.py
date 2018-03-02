@@ -187,7 +187,8 @@ def create_entries(all_products_info, website_id, website_name):
                 options=get_list_string(product_info['Options']))
             entry.save()
         except Exception as ex:
-            #lp.warning('Some problem while creating entry.\n Exception: "%s"' % ex)
+            #
+            # .warning('Some problem while creating entry.\n Exception: "%s"' % ex)
             pass
 
 

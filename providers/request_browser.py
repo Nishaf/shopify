@@ -5,7 +5,7 @@ import requests
 import zipfile
 import imghdr
 
-from providers.logging_provider import LoggingProvider
+#from providers.logging_provider import LoggingProvider
 
 
 class Browser:
@@ -20,7 +20,7 @@ class Browser:
     _proxy_api_key = None
 
     def __init__(self):
-        self.logging_provider = LoggingProvider()
+        #self.logging_provider = LoggingProvider()
         try:
             self.session = requests.Session()
             self.session.headers.update({
@@ -31,7 +31,8 @@ class Browser:
                 'User-Agent': self._user_agent,
             })
         except Exception as ex:
-            self.logging_provider.critical('Error while init request session; Exception: %s' % ex)
+            #self.logging_provider.critical('Error while init request session; Exception: %s' % ex)
+            pass
 
     def get_html(self, url, use_proxy=False):
         try:
@@ -43,7 +44,8 @@ class Browser:
             html_page = response.text
             return response.status_code, html_page
         except Exception as ex:
-            self.logging_provider.critical('Error in method get_html: url - %s\nException: \n%s' % (url, ex))
+            #self.logging_provider.critical('Error in method get_html: url - %s\nException: \n%s' % (url, ex))
+            pass
 
     def get_proxy(self):
         proxy_dict = {}
@@ -59,7 +61,8 @@ class Browser:
                 protocol: '%s://%s:%s' % (protocol, ip, port)
             }
         except Exception as ex:
-            self.logging_provider.warning('Can\'t get proxy. Exception: \n"%s"' % ex)
+            #self.logging_provider.warning('Can\'t get proxy. Exception: \n"%s"' % ex)
+            pass
         finally:
             return proxy_dict
 
