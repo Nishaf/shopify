@@ -1,7 +1,7 @@
 import json
 from bs4 import BeautifulSoup
 
-from providers.logging_provider import LoggingProvider
+#from providers.logging_provider import LoggingProvider
 from providers.request_browser import Browser
 from lxml import html
 
@@ -31,7 +31,7 @@ class SProduct:
 
     def __init__(self, browser=None):
         self.browser = browser if browser else Browser()
-        self.lp = LoggingProvider()
+        #self.lp = LoggingProvider()
 
     def get_product_info(self, product_url, category_title=None):
         status_code, content = self.browser.get_html(product_url, use_proxy=True)
