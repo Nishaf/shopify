@@ -14,8 +14,8 @@ class LoggingProvider:
             self.messages = queue.Queue()
             self.use_print = use_print
             logs_dir = os.path.join(sys.path[0], 'logs')
-            if not os.path.exists(logs_dir):
-                os.makedirs(logs_dir)
+            #if not os.path.exists(logs_dir):
+            #    os.makedirs(logs_dir)
             if not log_file_path:
                 now_date = datetime.datetime.now().strftime("%b%d%Y%I%M%p")
                 log_file_name = 'scraper_%s.logs' % now_date
